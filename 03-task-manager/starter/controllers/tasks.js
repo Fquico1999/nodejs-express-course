@@ -8,7 +8,7 @@ const getAllTasks = async (req, res) => {
     // given that they have a Query.then() function
     try{
         const allTasks = await Task.find({}).exec()
-        res.status(201).json(allTasks)
+        res.status(200).json(allTasks)
     }catch(error){
         res.status(500).json({msg: error})
     }
