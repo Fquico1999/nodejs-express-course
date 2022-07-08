@@ -1,3 +1,4 @@
+const { Error } = require('mongoose')
 const Task = require('../models/Task')
 
 const getAllTasks = (req, res) => {
@@ -5,8 +6,12 @@ const getAllTasks = (req, res) => {
 }
 
 const createTask = async (req, res) => {
-    const task = await Task.create(req.body)
-    res.status(201).json({task})
+    try{
+        const task = await Task.create(req.body)
+        res.status(201).json({task})
+    }catch (error){
+        res.status(500).json({msg:error})
+    }
 }
 
 const getTask = (req, res) => {
