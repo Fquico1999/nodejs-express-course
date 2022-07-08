@@ -1,8 +1,17 @@
 const { Error } = require('mongoose')
 const Task = require('../models/Task')
 
-const getAllTasks = (req, res) => {
-    res.send('Get all tasks')
+const getAllTasks = async (req, res) => {
+    // Mongoose models have static helper functions for CRUD operations
+    // These return Query objects. Even though these are not Promises
+    // we can still use await, since they can be used as a promise
+    // given that they have a Query.then() function
+    try{
+        const allTasks = await Task.find({}).exec()
+        res.status(201).json(allTasks)
+    }catch(error){
+        res.status(500).json({msg: error})
+    }
 }
 
 const createTask = async (req, res) => {
